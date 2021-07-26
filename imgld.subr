@@ -1,0 +1,19 @@
+#!/bin/sh
+
+imgld() {
+	if [ $# -le 2 ]; then
+		echo "usage: imgld hook addr file ..." 1>&2
+		return 1
+	fi
+	hook=$1
+	shift 1
+	addr=$1
+	shift 1
+	size=0
+	for file in "$@"; do
+		name="${file%.*}"
+		size=$(wc -c < "$file")
+		eval "$hook"
+		addr=$(($addr + $size))
+	done
+}

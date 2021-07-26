@@ -1,0 +1,53 @@
+forth-imgld
+
+A simple and flexible loader routine/script for working with Forth image files.
+
+imgld.subr can be used to easily write loader scripts which inject and anchor
+resource files within Forth image files. imgld.subr is intended to be used with
+the img (and scr) tools.
+
+The included imgld tool can be used to inject and anchor both Forth block and
+screen files within a Forth image file. It demonstrates how an imgld.subr-based
+loader script can integrate with make(1).
+
+REQUIREMENTS
+
+sh
+forth-img
+forth-scr
+Make (example only)
+
+GETTING STARTED
+
+See example/build.sh for an example of how to inject and anchor Forth block and
+screen files within a Forth image file. This example may be taken as a starting
+point for more advanced loader scripts.
+
+Examples
+
+From the example directory, to inject and anchor all Forth screen files into a
+fresh Forth image starting at block 512:
+
+$ cp forth.img.def forth.img
+$ img -r 1M forth.img
+$ ./imgld -b $((512 * 1024)) -o forth.img *.scr
+$
+
+From the example directory, to inject and anchor all Forth screen files into a
+existing Forth image starting at block 512:
+
+This is very useful for live development.
+
+$ ./imgld -b $((512 * 1024)) -o forth.img *.scr
+$ 
+
+To inject and anchor all Forth screen files from a list in a text file into an
+existing Forth image starting at block 512:
+
+$ ls *.scr > filelist.txt
+$ ./imgld -b $((512 * 1024)) -o forth.img $(cat filelist.txt)
+$ 
+
+LICENSE
+
+ISC-style license
